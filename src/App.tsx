@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Clock, Globe, Pin } from 'lucide-react';
 import { AnimatedGradientText } from '@/components/magicui/animated-gradient-text';
 import { TypingAnimation } from '@/components/magicui/typing-animation';
@@ -10,12 +9,23 @@ import { PulsatingButton } from '@/components/magicui/pulsating-button';
 import { TimeZoneCard } from '@/components/TimeZoneCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { Logo } from '@/components/Logo';
+import { SearchBar } from '@/components/SearchBar';
+import { SearchResults } from '@/components/SearchResults';
 import { usePinnedTimeZones } from '@/hooks/usePinnedTimeZones';
+import { useSearch } from '@/hooks/useSearch';
 import type { TimeZone } from '@/types/timezone';
 import { timeZones } from '@/data/timezones';
 
 function App() {
   const { pinnedTimeZones, togglePin, isTimeZonePinned } = usePinnedTimeZones();
+  const {
+    searchResults,
+    hasQuery,
+    noResults,
+    query,
+    handleSearch,
+    clearSearch
+  } = useSearch({ data: timeZones });
 
   // Get popular time zones for initial display
   const popularTimeZones = [
@@ -59,15 +69,10 @@ function App() {
             {/* Main Title */}
             <div className="space-y-4">
               <div className="flex items-center justify-center gap-4">
-                <Logo size={60} className="animate-pulse" />
                 <AnimatedGradientText className="text-5xl md:text-7xl font-bold">
                   Global Time Zones
                 </AnimatedGradientText>
-                <Logo size={60} className="animate-pulse" />
               </div>
-              <TypingAnimation className="text-xl md:text-2xl text-muted-foreground">
-                Track time across the world
-              </TypingAnimation>
             </div>
 
             {/* Subtitle */}
@@ -82,8 +87,27 @@ function App() {
         </div>
       </header>
 
+      {/* Search Section */}
+      <section className="relative z-10 container mx-auto px-4 pb-8">
+        <SearchBar
+          onSearch={handleSearch}
+          onClear={clearSearch}
+          className="mb-8"
+        />
+      </section>
+
       {/* Main Content */}
       <main className="relative z-10 container mx-auto px-4 pb-12">
+        {/* Search Results Section */}
+        <SearchResults
+          results={searchResults}
+          hasQuery={hasQuery}
+          noResults={noResults}
+          query={query}
+          onTogglePin={handleTogglePin}
+          isTimeZonePinned={isTimeZonePinned}
+        />
+
         {/* Pinned Time Zones Section */}
         {pinnedTimeZones.length > 0 && (
           <section className="mb-12">
@@ -110,75 +134,47 @@ function App() {
         )}
 
 
-        {/* Popular Time Zones Section */}
-        <section>
-          <div className="flex items-center gap-3 mb-6">
-            <Clock className="h-6 w-6 text-primary" />
-            <h2 className="text-2xl md:text-3xl font-bold text-foreground">
-              Popular Time Zones
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {popularTimeZones.map((timeZone, index) => (
-              <TimeZoneCard
-                key={timeZone.id}
-                timeZone={timeZone}
-                isPinned={isTimeZonePinned(timeZone.id)}
-                onTogglePin={handleTogglePin}
-                delay={index * 0.1}
-              />
-            ))}
-          </div>
-        </section>
-
-        {/* Scrolling Ticker */}
-        <section className="mt-16">
-          <Marquee className="py-6 bg-muted/20 backdrop-blur-sm rounded-lg border">
-            <div className="flex items-center gap-8 text-sm font-mono">
-              {timeZones.slice(0, 15).map((tz) => (
-                <div key={tz.id} className="flex items-center gap-2 whitespace-nowrap">
-                  <span className="font-semibold">{tz.city}</span>
-                  <span className="text-muted-foreground">•</span>
-                  <span className="text-muted-foreground">{tz.abbreviation}</span>
-                </div>
-              ))}
+        {/* Popular Time Zones Section - Only show when not searching */}
+        {!hasQuery && (
+          <section>
+            <div className="flex items-center gap-3 mb-6">
+              <Clock className="h-6 w-6 text-primary" />
+              <h2 className="text-2xl md:text-3xl font-bold text-foreground">
+                Popular Time Zones
+              </h2>
             </div>
-          </Marquee>
-        </section>
 
-        {/* Call to Action */}
-        {pinnedTimeZones.length === 0 && (
-          <section className="mt-16 text-center">
-            <div className="space-y-4">
-              <TextAnimate
-                animation="blurInUp"
-                by="word"
-                className="text-lg text-muted-foreground"
-              >
-                Start by pinning your first time zone from the popular cities below!
-              </TextAnimate>
-              <PulsatingButton
-                className="mt-4"
-                pulseColor="59, 130, 246"
-                duration="2s"
-              >
-                <Globe className="h-4 w-4 mr-2" />
-                Explore Time Zones
-              </PulsatingButton>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {popularTimeZones.map((timeZone, index) => (
+                <TimeZoneCard
+                  key={timeZone.id}
+                  timeZone={timeZone}
+                  isPinned={isTimeZonePinned(timeZone.id)}
+                  onTogglePin={handleTogglePin}
+                  delay={index * 0.1}
+                />
+              ))}
             </div>
           </section>
         )}
-      </main>
 
-      {/* Footer */}
-      <footer className="relative z-10 mt-16 py-8 border-t border-border/50 bg-background/80 backdrop-blur-sm">
-        <div className="container mx-auto px-4 text-center">
-          <p className="text-sm text-muted-foreground">
-            Built with Magic UI components • Real-time updates • Pin your favorites
-          </p>
-        </div>
-      </footer>
+        {/* Scrolling Ticker - Only show when not searching */}
+        {!hasQuery && (
+          <section className="mt-16">
+            <Marquee className="py-6 bg-muted/20 backdrop-blur-sm rounded-lg border">
+              <div className="flex items-center gap-8 text-sm font-mono">
+                {timeZones.slice(0, 15).map((tz) => (
+                  <div key={tz.id} className="flex items-center gap-2 whitespace-nowrap">
+                    <span className="font-semibold">{tz.city}</span>
+                    <span className="text-muted-foreground">•</span>
+                    <span className="text-muted-foreground">{tz.abbreviation}</span>
+                  </div>
+                ))}
+              </div>
+            </Marquee>
+          </section>
+        )}
+      </main>
     </div>
   );
 }
