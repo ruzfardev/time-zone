@@ -1,14 +1,11 @@
-import { Clock, Globe, Pin } from 'lucide-react';
+import { Clock, Pin } from 'lucide-react';
 import { AnimatedGradientText } from '@/components/magicui/animated-gradient-text';
-import { TypingAnimation } from '@/components/magicui/typing-animation';
 import { AnimatedGridPattern } from '@/components/magicui/animated-grid-pattern';
 import { Particles } from '@/components/magicui/particles';
 import { TextAnimate } from '@/components/magicui/text-animate';
 import { Marquee } from '@/components/magicui/marquee';
-import { PulsatingButton } from '@/components/magicui/pulsating-button';
 import { TimeZoneCard } from '@/components/TimeZoneCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
-import { Logo } from '@/components/Logo';
 import { SearchBar } from '@/components/SearchBar';
 import { SearchResults } from '@/components/SearchResults';
 import { usePinnedTimeZones } from '@/hooks/usePinnedTimeZones';

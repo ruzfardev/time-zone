@@ -120,7 +120,7 @@ export const TimeZoneCard = ({
           {/* Interactive button for additional actions */}
           <div className="pt-2">
             <InteractiveHoverButton
-              text={isPinned ? "Pinned" : "Pin Time Zone"}
+              // text={isPinned ? "Pinned" : "Pin Time Zone"}
               className="w-full h-9 text-sm"
               onClick={handleTogglePin}
             />
