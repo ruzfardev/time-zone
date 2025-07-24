@@ -105,7 +105,7 @@ function App() {
           isTimeZonePinned={isTimeZonePinned}
         />
 
-        {/* Pinned Time Zones Section */}
+        {/* Pinned Time Zones Section
         {pinnedTimeZones.length > 0 && (
           <section className="mb-12">
             <div className="flex items-center gap-3 mb-6">
@@ -123,12 +123,11 @@ function App() {
                   isPinned={true}
                   onTogglePin={handleTogglePin}
                   delay={index * 0.1}
-                  variant="neon"
                 />
               ))}
             </div>
           </section>
-        )}
+        )} */}
 
 
         {/* Popular Time Zones Section - Only show when not searching */}

@@ -88,7 +88,7 @@ export const TimeZoneCard = ({
                 {timeZoneDisplay.abbreviation}
               </Badge>
 
-              <AnimatedSubscribeButton
+              {/* <AnimatedSubscribeButton
                 subscribeStatus={isSubscribed}
                 className="h-8 w-8 p-0"
                 onClick={handleTogglePin}
@@ -99,7 +99,7 @@ export const TimeZoneCard = ({
                 <span className="flex items-center justify-center">
                   <PinOff className="h-4 w-4" />
                 </span>
-              </AnimatedSubscribeButton>
+              </AnimatedSubscribeButton> */}
             </div>
           </div>
 
