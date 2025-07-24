@@ -1,4 +1,4 @@
-import { Clock, Pin } from 'lucide-react';
+import { Clock } from 'lucide-react';
 import { AnimatedGradientText } from '@/components/magicui/animated-gradient-text';
 import { AnimatedGridPattern } from '@/components/magicui/animated-grid-pattern';
 import { Particles } from '@/components/magicui/particles';
@@ -14,7 +14,7 @@ import type { TimeZone } from '@/types/timezone';
 import { timeZones } from '@/data/timezones';
 
 function App() {
-  const { pinnedTimeZones, togglePin, isTimeZonePinned } = usePinnedTimeZones();
+  const { togglePin, isTimeZonePinned } = usePinnedTimeZones();
   const {
     searchResults,
     hasQuery,

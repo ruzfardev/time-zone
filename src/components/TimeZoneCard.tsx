@@ -1,11 +1,9 @@
-import { useState } from 'react';
 import { MagicCard } from '@/components/magicui/magic-card';
 import { NeonGradientCard } from '@/components/magicui/neon-gradient-card';
 import { InteractiveHoverButton } from '@/components/magicui/interactive-hover-button';
-import { AnimatedSubscribeButton } from '@/components/magicui/animated-subscribe-button';
 import { BlurFade } from '@/components/magicui/blur-fade';
 import { Badge } from '@/components/ui/badge';
-import { Pin, PinOff, Clock, MapPin } from 'lucide-react';
+import { Clock, MapPin } from 'lucide-react';
 import type { TimeZone } from '@/types/timezone';
 import { useTimeZone } from '@/hooks/useTimeZone';
 import confetti from 'canvas-confetti';
@@ -26,12 +24,9 @@ export const TimeZoneCard = ({
   variant = 'default'
 }: TimeZoneCardProps) => {
   const timeZoneDisplay = useTimeZone(timeZone);
-  const [isSubscribed, setIsSubscribed] = useState(isPinned);
-
   const handleTogglePin = () => {
     const newPinnedState = !isPinned;
     onTogglePin(timeZone);
-    setIsSubscribed(newPinnedState);
 
     // Trigger confetti when pinning a new time zone
     if (newPinnedState) {
