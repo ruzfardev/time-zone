@@ -9,6 +9,7 @@ import { Marquee } from '@/components/magicui/marquee';
 import { PulsatingButton } from '@/components/magicui/pulsating-button';
 import { TimeZoneCard } from '@/components/TimeZoneCard';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import { Logo } from '@/components/Logo';
 import { usePinnedTimeZones } from '@/hooks/usePinnedTimeZones';
 import type { TimeZone } from '@/types/timezone';
 import { timeZones } from '@/data/timezones';
@@ -56,10 +57,14 @@ function App() {
         <div className="container mx-auto px-4">
           <div className="text-center space-y-6">
             {/* Main Title */}
-            <div className="space-y-2">
-              <AnimatedGradientText className="text-5xl md:text-7xl font-bold">
-                Global Time Zones
-              </AnimatedGradientText>
+            <div className="space-y-4">
+              <div className="flex items-center justify-center gap-4">
+                <Logo size={60} className="animate-pulse" />
+                <AnimatedGradientText className="text-5xl md:text-7xl font-bold">
+                  Global Time Zones
+                </AnimatedGradientText>
+                <Logo size={60} className="animate-pulse" />
+              </div>
               <TypingAnimation className="text-xl md:text-2xl text-muted-foreground">
                 Track time across the world
               </TypingAnimation>
